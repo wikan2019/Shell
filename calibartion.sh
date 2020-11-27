@@ -41,6 +41,7 @@ log_intrinsics_front_left()
 {
 	# ssh-keygen -f "~/.ssh/known_hosts" -R "192.168.1.80"&&
 	scp -r ~/saic_calibration/DM_LOGGER/dm_logger_us_960_front_left root@192.168.1.80:/tmp
+	ssh root@192.168.1.80 "cd /tmp/intrinsics && rm -r cam*"
 	ssh root@192.168.1.80 "chmod 777 /tmp/dm_logger_us_960_front_left/lib/main "&&
 	ssh root@192.168.1.80 "cd /tmp/dm_logger_us_960_front_left && ./run.sh"
 }
@@ -66,4 +67,6 @@ calibrate(){
 	~/Projects/SaicCalibration/laptop/calibration_test $1
 }
 
-
+cali_verification_2nd(){
+	~/Projects/SAIC_CALIBRATION_VALI/SAIC_CALIBRATION/laptop/cali_verification_2nd $1 $2 $3 a .jpg $4 $5 $6
+}
