@@ -5,6 +5,17 @@ start_log(){
 
 }
 
+hikan_scan(){
+	cd  ~/Projects/saic_pano_calibration/build && ./main 
+}
+
+vector_pose_transform(){
+	/home/huikang/Projects/SAIC_CALIBRATION_VALI/SAIC_CALIBRATION/build/vector_pose_transmisser --input_json_path $1
+}
+
+matrix_2_vector_pose(){
+	/home/huikang/Projects/SAIC_CALIBRATION_VALI/SAIC_CALIBRATION/build/matrix2vector_pose --input_json_path $1
+}
 log_extrinsics_image()
 {
 	 ssh-keygen -f "~/.ssh/known_hosts" -R "192.168.1.80" &&
@@ -19,6 +30,26 @@ log_extrinsics_image_front_left(){
 	mkdir ~/extrinsics/$1
 	scp -r root@192.168.1.80:/tmp/sop_cali_img ~/extrinsics/$1 &&
 	eog ~/extrinsics/$1/sop_cali_img/front_raw.jpg
+
+}
+
+log_extrinsics_image_high_threshold(){
+	# ssh-keygen -f "~/.ssh/known_hosts" -R "192.168.1.80" 
+	scp -r ~/Projects/SaicCalibration/iecu_demo_sop_high_threshold root@192.168.1.80:/tmp &&
+		ssh root@192.168.1.80 " cd /tmp/iecu_demo_sop_hig_threshold && ./run.sh"
+	mkdir ~/extrinsics/$1
+	scp -r root@192.168.1.80:/tmp/sop_cali_img ~/extrinsics/$1 &&
+	eog ~/extrinsics/$1/sop_cali_img/front_raw.jpg
+
+}
+
+test_anting_extrinsics_image(){
+	# ssh-keygen -f "~/.ssh/known_hosts" -R "192.168.1.80" 
+	scp -r ~/Projects/SaicCalibration/iecu_demo_anting_front_left root@192.168.1.80:/tmp &&
+	ssh root@192.168.1.80 " cd /tmp/iecu_demo_anting_front_left && ./run_test_anting.sh"
+	mkdir ~/extrinsics/$1
+	scp -r root@192.168.1.80:/tmp/anting_cali_img ~/extrinsics/$1 &&
+	eog ~/extrinsics/$1/anting_cali_img/left_raw.jpg
 
 }
 
